@@ -1,0 +1,10 @@
+price-list:
+   DIAMOND: 200.00
+   EMERALD: 300.00
+   REDSTONE: 50.00
+item-cap:
+   DIAMOND: 100
+   EMERALD: 50
+multipliers:
+   rank-ruby: 1.2
+   rank-sapphire: 1.5

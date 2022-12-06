@@ -1,0 +1,13 @@
+name: SellAll
+main: me.ShanaChans.SellAll.SellAllManager
+author: [ShanaChans]
+depend: [NeoCore, Vault]
+version: 1.0
+api-version: 1.16
+commands:
+   sellall:
+       description: Sell all the goods in your inventory!
+       usage: /sellall
+   value:
+       description: Get the value of the item in your hand!
+       usage: /value
