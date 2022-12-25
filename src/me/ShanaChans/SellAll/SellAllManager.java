@@ -93,7 +93,7 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 		    }
 		});
 		inst = this;
-		NeoCore.registerIOComponent(this, this);
+		NeoCore.registerIOComponent(this, this, "SellAllManager");
 	}
 
 	public void onDisable() {
@@ -305,7 +305,7 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 	
     public static void resetPlayers()
     {
-    	Statement stmt = NeoCore.getStatement();
+    	Statement stmt = NeoCore.getStatement("SellAllManager");
 		Bukkit.getLogger().info("[Sellall] Reset all players!");
     	BungeeAPI.broadcast("§6Sell All Limits have been refreshed!");
     	
@@ -323,7 +323,7 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
     
     public static void resetPlayer(Player p)
     {
-    	Statement stmt = NeoCore.getStatement();
+    	Statement stmt = NeoCore.getStatement("SellAllManager");
     	
     	try {
     		stmt.executeUpdate("DELETE FROM sellall_players WHERE uuid = '" + p.getUniqueId() + "';");
@@ -336,11 +336,6 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 
 	@Override
 	public void cleanup(Statement arg0, Statement arg1) {}
-
-	@Override
-	public String getKey() {
-		return "SellAllManager";
-	}
 
 	@Override
 	public void loadPlayer(Player arg0, Statement arg1) {}
