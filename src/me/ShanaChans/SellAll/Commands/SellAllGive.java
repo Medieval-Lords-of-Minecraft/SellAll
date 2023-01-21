@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import me.ShanaChans.SellAll.Items.Items;
-import me.neoblade298.neocore.commands.Subcommand;
-import me.neoblade298.neocore.commands.SubcommandRunner;
+import me.neoblade298.neocore.bukkit.commands.Subcommand;
+import me.neoblade298.neocore.bukkit.commands.SubcommandRunner;
 
 public class SellAllGive implements Subcommand
 {

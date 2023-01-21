@@ -13,7 +13,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.tr7zw.nbtapi.NBTItem;
-import me.neoblade298.neocore.NeoCore;
+import me.neoblade298.neocore.bukkit.NeoCore;
 import me.neoblade298.neocore.util.PaginatedList;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;

@@ -46,13 +46,13 @@ import me.ShanaChans.SellAll.Commands.SellAllReset;
 import me.ShanaChans.SellAll.Commands.SellAllSet;
 import me.ShanaChans.SellAll.Commands.SellAllValue;
 import me.ShanaChans.SellAll.Inventories.CustomInventory;
-import me.neoblade298.neocore.NeoCore;
-import me.neoblade298.neocore.bungee.BungeeAPI;
-import me.neoblade298.neocore.commands.CommandManager;
-import me.neoblade298.neocore.io.IOComponent;
-import me.neoblade298.neocore.player.PlayerTags;
-import me.neoblade298.neocore.scheduler.ScheduleInterval;
-import me.neoblade298.neocore.scheduler.SchedulerAPI;
+import me.neoblade298.neocore.bukkit.NeoCore;
+import me.neoblade298.neocore.bukkit.bungee.BungeeAPI;
+import me.neoblade298.neocore.bukkit.commands.CommandManager;
+import me.neoblade298.neocore.bukkit.io.IOComponent;
+import me.neoblade298.neocore.bukkit.player.PlayerTags;
+import me.neoblade298.neocore.bukkit.scheduler.ScheduleInterval;
+import me.neoblade298.neocore.bukkit.scheduler.SchedulerAPI;
 import me.neoblade298.neocore.util.PaginatedList;
 
 public class SellAllManager extends JavaPlugin implements Listener, IOComponent {

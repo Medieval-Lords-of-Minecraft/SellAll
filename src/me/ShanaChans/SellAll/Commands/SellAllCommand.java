@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.ShanaChans.SellAll.Inventories.SellAllInventory;
-import me.neoblade298.neocore.commands.Subcommand;
-import me.neoblade298.neocore.commands.SubcommandRunner;
+import me.neoblade298.neocore.bukkit.commands.Subcommand;
+import me.neoblade298.neocore.bukkit.commands.SubcommandRunner;
 
 public class SellAllCommand implements Subcommand
 {
