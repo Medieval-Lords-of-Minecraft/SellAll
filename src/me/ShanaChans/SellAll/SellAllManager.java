@@ -108,6 +108,7 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 		sellAll.registerCommandList("help");
 		
 		SubcommandManager sellAdmin = new SubcommandManager("selladmin", null, ChatColor.DARK_RED, this);
+		sellAdmin.registerCommandList("");
 		sellAdmin.register(new SellAdminSet("set", "Set amount sold for player", null, SubcommandRunner.PLAYER_ONLY));
 		sellAdmin.register(new SellAdminGive("give", "Gives a sell wand", null, SubcommandRunner.PLAYER_ONLY));
 		sellAdmin.register(new SellAdminReload("reload", "Reload the plugin", null, SubcommandRunner.PLAYER_ONLY));
