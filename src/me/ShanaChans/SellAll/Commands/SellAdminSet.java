@@ -7,38 +7,12 @@ import org.bukkit.entity.Player;
 
 import me.ShanaChans.SellAll.SellAllManager;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
-import me.neoblade298.neocore.bukkit.commands.SubcommandRunner;
+import me.neoblade298.neocore.shared.commands.SubcommandRunner;
 
-public class SellAllSet implements Subcommand
+public class SellAdminSet extends Subcommand
 {
-	@Override
-	public String getDescription() 
-	{
-		return "Set various things to sold cap";
-	}
-
-	@Override
-	public String getKey() 
-	{
-		return "set";
-	}
-
-	@Override
-	public String getPermission() 
-	{
-		return "sellall.set";
-	}
-	
-	@Override
-	public boolean isHidden()
-	{
-		return true;
-	}
-
-	@Override
-	public SubcommandRunner getRunner() 
-	{
-		return SubcommandRunner.PLAYER_ONLY;
+	public SellAdminSet(String key, String desc, String perm, SubcommandRunner runner) {
+		super(key, desc, perm, runner);
 	}
 
 	@Override

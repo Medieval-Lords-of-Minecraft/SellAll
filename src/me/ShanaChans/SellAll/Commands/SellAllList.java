@@ -1,54 +1,19 @@
 package me.ShanaChans.SellAll.Commands;
 
-import java.util.Arrays;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.ShanaChans.SellAll.SellAllManager;
-import me.neoblade298.neocore.bukkit.commands.CommandArgument;
-import me.neoblade298.neocore.bukkit.commands.CommandArguments;
+import me.neoblade298.neocore.shared.commands.Arg;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
-import me.neoblade298.neocore.bukkit.commands.SubcommandRunner;
+import me.neoblade298.neocore.shared.commands.SubcommandRunner;
 
-public class SellAllList implements Subcommand
+public class SellAllList extends Subcommand
 {
-	private static final CommandArguments args = new CommandArguments(Arrays.asList(new CommandArgument("page number", false)));
-
-	@Override
-	public String getDescription() 
-	{
-		return "Check the prices for all materials!";
-	}
-
-	@Override
-	public String getKey() 
-	{
-		return "list";
-	}
-	
-	@Override
-	public CommandArguments getArgs()
-	{
-		return args;
-	}
-	
-	@Override
-	public String getPermission() 
-	{
-		return null;
-	}
-	
-	@Override
-	public String[] getAliases() 
-	{
-		return new String[] {"price", "prices"};
-	}
-	
-	@Override
-	public SubcommandRunner getRunner() 
-	{
-		return SubcommandRunner.PLAYER_ONLY;
+	public SellAllList(String key, String desc, String perm, SubcommandRunner runner) {
+		super(key, desc, perm, runner);
+		args.add(new Arg("page #"));
+		aliases = new String[] { "price", "prices" };
 	}
 
 	@Override

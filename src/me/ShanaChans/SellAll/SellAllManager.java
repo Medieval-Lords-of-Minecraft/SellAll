@@ -1,6 +1,7 @@
 package me.ShanaChans.SellAll;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,25 +36,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.tr7zw.nbtapi.NBTItem;
-import me.ShanaChans.SellAll.Commands.SellAllCap;
-import me.ShanaChans.SellAll.Commands.SellAllCommand;
-import me.ShanaChans.SellAll.Commands.SellAllConfirm;
-import me.ShanaChans.SellAll.Commands.SellAllGive;
-import me.ShanaChans.SellAll.Commands.SellAllList;
-import me.ShanaChans.SellAll.Commands.SellAllQuick;
-import me.ShanaChans.SellAll.Commands.SellAllReload;
-import me.ShanaChans.SellAll.Commands.SellAllReset;
-import me.ShanaChans.SellAll.Commands.SellAllSet;
-import me.ShanaChans.SellAll.Commands.SellAllValue;
+import me.ShanaChans.SellAll.Commands.*;
 import me.ShanaChans.SellAll.Inventories.CustomInventory;
 import me.neoblade298.neocore.bukkit.NeoCore;
 import me.neoblade298.neocore.bukkit.bungee.BungeeAPI;
-import me.neoblade298.neocore.bukkit.commands.CommandManager;
+import me.neoblade298.neocore.bukkit.commands.SubcommandManager;
 import me.neoblade298.neocore.bukkit.io.IOComponent;
 import me.neoblade298.neocore.bukkit.player.PlayerTags;
 import me.neoblade298.neocore.bukkit.scheduler.ScheduleInterval;
 import me.neoblade298.neocore.bukkit.scheduler.SchedulerAPI;
-import me.neoblade298.neocore.util.PaginatedList;
+import me.neoblade298.neocore.shared.commands.SubcommandRunner;
+import me.neoblade298.neocore.shared.util.PaginatedList;
+import net.md_5.bungee.api.ChatColor;
 
 public class SellAllManager extends JavaPlugin implements Listener, IOComponent {
 	private static TreeMap<Material, Double> itemPrices = new TreeMap<Material, Double>();
@@ -102,21 +96,22 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 	}
 
 	private void initCommands() {
-		CommandManager sellAll = new CommandManager("sellall", this);
-		CommandManager value = new CommandManager("value", this);
-		sellAll.register(new SellAllCommand());
-		sellAll.register(new SellAllCap());
-		sellAll.register(new SellAllList());
-		sellAll.register(new SellAllSet());
-		sellAll.register(new SellAllGive());
-		sellAll.register(new SellAllReload());
-		sellAll.register(new SellAllQuick());
-		sellAll.register(new SellAllConfirm());
-		sellAll.register(new SellAllReset());
-		value.register(new SellAllValue());
+		SubcommandManager sellAll = new SubcommandManager("sellall", null, ChatColor.RED, this);
+		sellAll.register(new SellAllCommand("", "Sell your items!", null, SubcommandRunner.PLAYER_ONLY));
+		sellAll.register(new SellAllCap("cap", "Check the sell limits for items", null, SubcommandRunner.PLAYER_ONLY));
+		sellAll.register(new SellAllList("list", "Lists prices for materials you can sell", null, SubcommandRunner.PLAYER_ONLY));
+		sellAll.register(new SellAllQuick("quick", "Sell items instantly with no confirm inventory", null, SubcommandRunner.PLAYER_ONLY));
+		sellAll.register(new SellAllConfirm("confirm", "Confirm your sell", null, SubcommandRunner.PLAYER_ONLY));
+		
+		SubcommandManager value = new SubcommandManager("value", null, ChatColor.RED, this);
+		value.register(new SellAllValue("", "Checks the value of the item in hand", null, SubcommandRunner.PLAYER_ONLY));
 		sellAll.registerCommandList("help");
-		this.getCommand("sellall").setExecutor(sellAll);
-		this.getCommand("value").setExecutor(value);
+		
+		SubcommandManager sellAdmin = new SubcommandManager("selladmin", null, ChatColor.DARK_RED, this);
+		sellAdmin.register(new SellAdminSet("set", "Set amount sold for player", null, SubcommandRunner.PLAYER_ONLY));
+		sellAdmin.register(new SellAdminGive("give", "Gives a sell wand", null, SubcommandRunner.PLAYER_ONLY));
+		sellAdmin.register(new SellAdminReload("reload", "Reload the plugin", null, SubcommandRunner.PLAYER_ONLY));
+		sellAdmin.register(new SellAdminReset("list", "Reset sellall", null, SubcommandRunner.PLAYER_ONLY));
 	}
 
 	public void loadConfigs() 
@@ -202,7 +197,7 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 				&& containers.contains(e.getClickedBlock().getType()) && e.getItem() != null) 
 		{
 			NBTItem heldItem = new NBTItem(e.getItem());
-			if (heldItem.hasKey("sellStick")) {
+			if (heldItem.hasKey("sellStick") && NeoCore.isLoaded(player)) {
 				e.setCancelled(true);
 				Container container = (Container) e.getClickedBlock().getState();
 				Inventory inv = container.getInventory();
@@ -297,7 +292,7 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 			}
 			String nextPage ="/sellall list " + (pageNumber + 2); 
 			String prevPage = "/sellall list " + (pageNumber); 
-			list.displayFooter(player, pageNumber, nextPage, prevPage);
+			player.spigot().sendMessage(list.getFooter(pageNumber, nextPage, prevPage));
 			return;
 		}
 		player.sendMessage("§7Invalid page");
@@ -305,12 +300,12 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 	
     public static void resetPlayers()
     {
-    	Statement stmt = NeoCore.getStatement("SellAllManager");
-		Bukkit.getLogger().info("[Sellall] Reset all players!");
-    	BungeeAPI.broadcast("§6Sell All Limits have been refreshed!");
     	
-    	try {
+    	try (Connection con = NeoCore.getConnection("SellAllManager");
+    			Statement stmt = con.createStatement();){
 			stmt.executeUpdate("DELETE FROM sellall_players;");
+			Bukkit.getLogger().info("[Sellall] Reset all players!");
+	    	BungeeAPI.broadcast("§6Sell All Limits have been refreshed!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -323,9 +318,8 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
     
     public static void resetPlayer(Player p)
     {
-    	Statement stmt = NeoCore.getStatement("SellAllManager");
-    	
-    	try {
+    	try (Connection con = NeoCore.getConnection("SellAllManager");
+    			Statement stmt = con.createStatement();){
     		stmt.executeUpdate("DELETE FROM sellall_players WHERE uuid = '" + p.getUniqueId() + "';");
 		} catch (SQLException e) {
 			e.printStackTrace();

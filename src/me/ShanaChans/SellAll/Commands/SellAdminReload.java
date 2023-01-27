@@ -7,18 +7,18 @@ import me.ShanaChans.SellAll.SellAllManager;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
 import me.neoblade298.neocore.shared.commands.SubcommandRunner;
 
-public class SellAllValue extends Subcommand
+public class SellAdminReload extends Subcommand
 {
-
-	public SellAllValue(String key, String desc, String perm, SubcommandRunner runner) {
+	public SellAdminReload(String key, String desc, String perm, SubcommandRunner runner) {
 		super(key, desc, perm, runner);
 	}
-
+	
 	@Override
 	public void run(CommandSender sender, String[] args) 
-	{
-		Player p = (Player) sender;
-		SellAllManager.getPlayers().get(p.getUniqueId()).getValue(p);
+	{	
+		Player player = (Player) sender;
+		player.sendMessage("§6SellAll Config reloaded!");
+		SellAllManager.inst().loadConfigs();
 	}
 
 }

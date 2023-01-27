@@ -8,6 +8,9 @@ commands:
    sellall:
        description: Sell all the goods in your inventory!
        usage: /sellall
+   selladmin:
+       description: Admin commands for sellall
+       usage: /selladmin
    value:
        description: Get the value of the item in your hand!
        usage: /value

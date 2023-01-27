@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.tr7zw.nbtapi.NBTItem;
 import me.neoblade298.neocore.bukkit.NeoCore;
-import me.neoblade298.neocore.util.PaginatedList;
+import me.neoblade298.neocore.shared.util.PaginatedList;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -232,7 +232,7 @@ public class SellAllPlayer
 			}
 			String nextPage ="/sellall cap " + displayPlayer.getName() + " " + (pageNumber + 2); 
 			String prevPage = "/sellall cap " + displayPlayer.getName() + " " + (pageNumber); 
-			list.displayFooter(player, pageNumber, nextPage, prevPage);
+			player.spigot().sendMessage(list.getFooter(pageNumber, nextPage, prevPage));
 			return;
 		}
 		player.sendMessage("§7Invalid page");

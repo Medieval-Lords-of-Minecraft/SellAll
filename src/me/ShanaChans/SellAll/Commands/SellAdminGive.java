@@ -5,38 +5,12 @@ import org.bukkit.command.CommandSender;
 
 import me.ShanaChans.SellAll.Items.Items;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
-import me.neoblade298.neocore.bukkit.commands.SubcommandRunner;
+import me.neoblade298.neocore.shared.commands.SubcommandRunner;
 
-public class SellAllGive implements Subcommand
+public class SellAdminGive extends Subcommand
 {
-	@Override
-	public String getDescription() 
-	{
-		return "Give yourself a sell wand";
-	}
-
-	@Override
-	public String getKey() 
-	{
-		return "give";
-	}
-
-	@Override
-	public String getPermission() 
-	{
-		return "sellall.give";
-	}
-
-	@Override
-	public boolean isHidden()
-	{
-		return true;
-	}
-	
-	@Override
-	public SubcommandRunner getRunner() 
-	{
-		return SubcommandRunner.BOTH;
+	public SellAdminGive(String key, String desc, String perm, SubcommandRunner runner) {
+		super(key, desc, perm, runner);
 	}
 	
 	@Override

@@ -6,38 +6,13 @@ import org.bukkit.entity.Player;
 
 import me.ShanaChans.SellAll.SellAllManager;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
-import me.neoblade298.neocore.bukkit.commands.SubcommandRunner;
+import me.neoblade298.neocore.shared.commands.SubcommandRunner;
 
-public class SellAllQuick implements Subcommand
+public class SellAllQuick extends Subcommand
 {
-	@Override
-	public String getDescription() 
-	{
-		return "Sell all your riches in your inventory!";
-	}
-
-	@Override
-	public String getKey() 
-	{
-		return "quick";
-	}
-	
-	@Override
-	public String[] getAliases() 
-	{
-		return new String[] {"q"};
-	}
-
-	@Override
-	public String getPermission() 
-	{
-		return null;
-	}
-
-	@Override
-	public SubcommandRunner getRunner() 
-	{
-		return SubcommandRunner.PLAYER_ONLY;
+	public SellAllQuick(String key, String desc, String perm, SubcommandRunner runner) {
+		super(key, desc, perm, runner);
+		aliases = new String[] { "q" };
 	}
 	
 	@Override

@@ -1,55 +1,20 @@
 package me.ShanaChans.SellAll.Commands;
 
-import java.util.Arrays;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.ShanaChans.SellAll.SellAllManager;
-import me.neoblade298.neocore.bukkit.commands.CommandArgument;
-import me.neoblade298.neocore.bukkit.commands.CommandArguments;
+import me.neoblade298.neocore.shared.commands.Arg;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
-import me.neoblade298.neocore.bukkit.commands.SubcommandRunner;
+import me.neoblade298.neocore.shared.commands.SubcommandRunner;
 
-public class SellAllCap implements Subcommand
+public class SellAllCap extends Subcommand
 {
-	private static final CommandArguments args = new CommandArguments(Arrays.asList(new CommandArgument("player/page number", false),new CommandArgument("page number", false)));
-
-	@Override
-	public String getDescription() 
-	{
-		return "Check the sell limits for your materials!";
-	}
-
-	@Override
-	public String getKey() 
-	{
-		return "limit";
-	}
-	
-	@Override
-	public CommandArguments getArgs()
-	{
-		return args;
-	}
-	
-	@Override
-	public String getPermission() 
-	{
-		return null;
-	}
-
-	@Override
-	public SubcommandRunner getRunner() 
-	{
-		return SubcommandRunner.PLAYER_ONLY;
-	}
-	
-	@Override
-	public String[] getAliases() 
-	{
-		return new String[] {"cap"};
+	public SellAllCap(String key, String desc, String perm, SubcommandRunner runner) {
+		super(key, desc, perm, runner);
+		args.add(new Arg("player", false), new Arg("page #", false));
+		aliases = new String[] {"limit"};
 	}
 
 	@Override

@@ -6,32 +6,12 @@ import org.bukkit.entity.Player;
 
 import me.ShanaChans.SellAll.SellAllManager;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
-import me.neoblade298.neocore.bukkit.commands.SubcommandRunner;
+import me.neoblade298.neocore.shared.commands.SubcommandRunner;
 
-public class SellAllConfirm implements Subcommand
+public class SellAllConfirm extends Subcommand
 {
-	@Override
-	public String getDescription() 
-	{
-		return "Confirm to sell your riches!";
-	}
-
-	@Override
-	public String getKey() 
-	{
-		return "confirm";
-	}
-
-	@Override
-	public String getPermission() 
-	{
-		return null;
-	}
-
-	@Override
-	public SubcommandRunner getRunner() 
-	{
-		return SubcommandRunner.PLAYER_ONLY;
+	public SellAllConfirm(String key, String desc, String perm, SubcommandRunner runner) {
+		super(key, desc, perm, runner);
 	}
 	
 	@Override
