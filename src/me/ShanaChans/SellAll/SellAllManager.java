@@ -97,6 +97,7 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 
 	private void initCommands() {
 		SubcommandManager sellAll = new SubcommandManager("sellall", null, ChatColor.RED, this);
+		sellAll.registerCommandList("help");
 		sellAll.register(new SellAllCommand("", "Sell your items!", null, SubcommandRunner.PLAYER_ONLY));
 		sellAll.register(new SellAllCap("cap", "Check the sell limits for items", null, SubcommandRunner.PLAYER_ONLY));
 		sellAll.register(new SellAllList("list", "Lists prices for materials you can sell", null, SubcommandRunner.PLAYER_ONLY));
@@ -105,14 +106,13 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 		
 		SubcommandManager value = new SubcommandManager("value", null, ChatColor.RED, this);
 		value.register(new SellAllValue("", "Checks the value of the item in hand", null, SubcommandRunner.PLAYER_ONLY));
-		sellAll.registerCommandList("help");
 		
 		SubcommandManager sellAdmin = new SubcommandManager("selladmin", null, ChatColor.DARK_RED, this);
 		sellAdmin.registerCommandList("");
-		sellAdmin.register(new SellAdminSet("set", "Set amount sold for player", null, SubcommandRunner.PLAYER_ONLY));
-		sellAdmin.register(new SellAdminGive("give", "Gives a sell wand", null, SubcommandRunner.PLAYER_ONLY));
-		sellAdmin.register(new SellAdminReload("reload", "Reload the plugin", null, SubcommandRunner.PLAYER_ONLY));
-		sellAdmin.register(new SellAdminReset("list", "Reset sellall", null, SubcommandRunner.PLAYER_ONLY));
+		sellAdmin.register(new SellAdminSet("set", "Set amount sold for player", null, SubcommandRunner.BOTH));
+		sellAdmin.register(new SellAdminGive("give", "Gives a sell wand", null, SubcommandRunner.BOTH));
+		sellAdmin.register(new SellAdminReload("reload", "Reload the plugin", null, SubcommandRunner.BOTH));
+		sellAdmin.register(new SellAdminReset("reset", "Reset sellall", null, SubcommandRunner.BOTH));
 	}
 
 	public void loadConfigs() 

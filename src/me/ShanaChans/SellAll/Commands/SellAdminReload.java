@@ -1,7 +1,6 @@
 package me.ShanaChans.SellAll.Commands;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import me.ShanaChans.SellAll.SellAllManager;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
@@ -16,8 +15,7 @@ public class SellAdminReload extends Subcommand
 	@Override
 	public void run(CommandSender sender, String[] args) 
 	{	
-		Player player = (Player) sender;
-		player.sendMessage("§6SellAll Config reloaded!");
+		sender.sendMessage("§6SellAll Config reloaded!");
 		SellAllManager.inst().loadConfigs();
 	}
 

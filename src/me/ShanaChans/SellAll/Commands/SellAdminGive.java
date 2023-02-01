@@ -21,7 +21,7 @@ public class SellAdminGive extends Subcommand
 	{
 		if(args.length > 0)
 		{
-			if(Bukkit.getPlayer(args[0]) != null && Bukkit.getPlayer(args[0]).isOnline())
+			if(Bukkit.getPlayer(args[0]) != null)
 			{
 				Bukkit.getPlayer(args[0]).getInventory().addItem(Items.getChestSellStick());
 			}
