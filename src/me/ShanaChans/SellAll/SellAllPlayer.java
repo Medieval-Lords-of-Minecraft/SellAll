@@ -236,7 +236,7 @@ public class SellAllPlayer
 			showTo.spigot().sendMessage(list.getFooter(pageNumber, nextPage, prevPage));
 			return;
 		}
-		player.sendMessage("§7Invalid page");
+		showTo.sendMessage("§7Invalid page");
 	}
 	
 	public void getValue(Player p)
