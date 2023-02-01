@@ -1,5 +1,6 @@
 package me.ShanaChans.SellAll.Commands;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -7,45 +8,51 @@ import org.bukkit.entity.Player;
 import me.ShanaChans.SellAll.SellAllManager;
 import me.neoblade298.neocore.shared.commands.Arg;
 import me.neoblade298.neocore.bukkit.commands.Subcommand;
+import me.neoblade298.neocore.bukkit.util.Util;
 import me.neoblade298.neocore.shared.commands.SubcommandRunner;
 
-public class SellAllCap extends Subcommand
-{
+public class SellAllCap extends Subcommand {
 	public SellAllCap(String key, String desc, String perm, SubcommandRunner runner) {
 		super(key, desc, perm, runner);
 		args.add(new Arg("player", false), new Arg("page #", false));
-		aliases = new String[] {"limit"};
+		aliases = new String[] { "limit" };
 	}
 
 	@Override
-	public void run(CommandSender sender, String[] args) 
-	{
-		Player player = (Player) sender;
-		
-		if(args.length > 0)
-		{
-			if(Bukkit.getPlayer(args[0]) != null)
-			{
-				if(Bukkit.getPlayer(args[0]).isOnline())
-				{
-					if(args.length > 1)
-					{
-						SellAllManager.getPlayers().get(Bukkit.getPlayer(args[0]).getUniqueId()).getSellCap(player, Bukkit.getPlayer(args[0]), Integer.parseInt(args[1]) - 1, SellAllManager.getPlayerSort(player));
-					}
-					else
-					{
-						SellAllManager.getPlayers().get(Bukkit.getPlayer(args[0]).getUniqueId()).getSellCap(player, Bukkit.getPlayer(args[0]), 0, SellAllManager.getPlayerSort(player));
-					}
+	public void run(CommandSender s, String[] args) {
+		Player p = (Player) s;
+
+		if (args.length == 0) {
+			SellAllManager.getPlayers().get(p.getUniqueId()).getSellCap(p, p, 0,
+					SellAllManager.getPlayerSort(p));
+			return;
+		}
+		else if (args.length == 1) {
+			if (StringUtils.isNumeric(args[0])) {
+				SellAllManager.getPlayers().get(p.getUniqueId()).getSellCap(p, p,
+						Integer.parseInt(args[0]) - 1, SellAllManager.getPlayerSort(p));
+			}
+			else {
+				p = Bukkit.getPlayer(args[0]);
+				if (p != null) {
+					SellAllManager.getPlayers().get(p.getUniqueId()).getSellCap(s,
+							p, 0, SellAllManager.getPlayerSort((Player) s));
+				}
+				else {
+					Util.msg(s, "&cThat player is not online!");
 				}
 			}
-			else
-			{
-				SellAllManager.getPlayers().get(player.getUniqueId()).getSellCap(player, player, Integer.parseInt(args[0]) - 1, SellAllManager.getPlayerSort(player));
-			}
 		}
-		else
-		{
-			SellAllManager.getPlayers().get(player.getUniqueId()).getSellCap(player, player, 0, SellAllManager.getPlayerSort(player));
+		else if (args.length == 2) {
+			p = Bukkit.getPlayer(args[0]);
+			if (p != null) {
+				SellAllManager.getPlayers().get(p.getUniqueId()).getSellCap(s,
+						p, Integer.parseInt(args[1]) - 1,
+						SellAllManager.getPlayerSort((Player) s));
+			}
+			else {
+				Util.msg(s, "&cThat player is not online!");
+			}
 		}
 	}
 }

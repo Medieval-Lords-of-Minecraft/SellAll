@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -214,7 +215,7 @@ public class SellAllPlayer
 	 * Lists out the players personal item caps
 	 * @param player
 	 */
-	public void getSellCap(Player player, Player displayPlayer, int pageNumber, TreeMap<Material, Double> sort)
+	public void getSellCap(CommandSender showTo, Player displayPlayer, int pageNumber, TreeMap<Material, Double> sort)
 	{
 		PaginatedList<String> list = new PaginatedList<String>();
 		for(Material mat : sort.keySet())
@@ -223,16 +224,16 @@ public class SellAllPlayer
 		}
 		if(-1 < pageNumber && pageNumber < list.pages())
 		{
-			player.sendMessage("§6O---={ " + displayPlayer.getName() + "'s Sell Soft Limits }=---O");
-			player.sendMessage("§eWarning: Going over the soft cap will cause item values to be");
-			player.sendMessage("§ediminished. At hard cap can no longer sell.");
+			showTo.sendMessage("§6O---={ " + displayPlayer.getName() + "'s Sell Soft Limits }=---O");
+			showTo.sendMessage("§eWarning: Going over the soft cap will cause item values to be");
+			showTo.sendMessage("§ediminished. At hard cap can no longer sell.");
 			for(String output : list.get(pageNumber))
 			{
-				player.sendMessage(output);
+				showTo.sendMessage(output);
 			}
 			String nextPage ="/sellall cap " + displayPlayer.getName() + " " + (pageNumber + 2); 
 			String prevPage = "/sellall cap " + displayPlayer.getName() + " " + (pageNumber); 
-			player.spigot().sendMessage(list.getFooter(pageNumber, nextPage, prevPage));
+			showTo.spigot().sendMessage(list.getFooter(pageNumber, nextPage, prevPage));
 			return;
 		}
 		player.sendMessage("§7Invalid page");
