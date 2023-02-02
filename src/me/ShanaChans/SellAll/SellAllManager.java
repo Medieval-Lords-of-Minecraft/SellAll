@@ -107,7 +107,7 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 		SubcommandManager value = new SubcommandManager("value", null, ChatColor.RED, this);
 		value.register(new SellAllValue("", "Checks the value of the item in hand", null, SubcommandRunner.PLAYER_ONLY));
 		
-		SubcommandManager sellAdmin = new SubcommandManager("selladmin", null, ChatColor.DARK_RED, this);
+		SubcommandManager sellAdmin = new SubcommandManager("selladmin", "sellall.admin", ChatColor.DARK_RED, this);
 		sellAdmin.registerCommandList("");
 		sellAdmin.register(new SellAdminSet("set", "Set amount sold for player", null, SubcommandRunner.BOTH));
 		sellAdmin.register(new SellAdminGive("give", "Gives a sell wand", null, SubcommandRunner.BOTH));
