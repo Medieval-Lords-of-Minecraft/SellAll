@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -311,9 +312,18 @@ public class SellAllManager extends JavaPlugin implements Listener, IOComponent 
 			e.printStackTrace();
 		}
     	
+    	ArrayList<UUID> toRemove = new ArrayList<UUID>();
     	for(UUID uuid : players.keySet())
     	{
+    		if (players.get(uuid) == null) {
+    			toRemove.add(uuid);
+    			continue;
+    		}
     		players.get(uuid).resetSold();
+    	}
+    	for (UUID uuid : toRemove) {
+    		players.remove(uuid);
+    		Bukkit.getLogger().warning("[SellAll] Removed uuid " + uuid + ", null account");
     	}
     }
     
